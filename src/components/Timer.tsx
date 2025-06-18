@@ -1,19 +1,20 @@
 import {useEffect, useRef, useState } from "react"
 
-type TimeArgs = {
+type TimerArgs = {
     milisegundos: number;
     //segundos?: number;  No es obligatorio osea puede no definirse
 }
 
-const Timer = ( { milisegundos }: TimeArgs ) => {
+const Timer = ( { milisegundos }: TimerArgs ) => {
 
-    const [segundos, setSegundos] = useState(0)
-    const ref = useRef<NodeJS.Timeout>();
+
+    const [segundos, setSegundos] = useState(0);
+    const ref = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        clearInterval(ref.current)
+        ref.current && clearInterval(ref.current)
 
-        ref.current = setInterval(() => setSegundos(s => s + 1) , 1000);
+        ref.current = setInterval(() => setSegundos(s => s + 1) , milisegundos);
     },[milisegundos])
 
   return (
